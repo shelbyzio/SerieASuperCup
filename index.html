@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Serie A Style 12-Team Tournament Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
+        .scrollbar-hidden::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-[#003399] border-b-4 border-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-3 py-3 flex flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <div class="bg-white p-1 rounded-lg h-9 w-9 overflow-hidden flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ab/Serie_A_ENILIVE_logo.svg/960px-Serie_A_ENILIVE_logo.svg.png" alt="Serie A" class="h-full w-full object-contain">
+                </div>
+                <div>
+                    <h1 class="text-sm font-black text-white">SERIE <span class="text-white">A</span></h1>
+                    <p class="text-[8px] text-blue-200 font-bold uppercase tracking-widest">THE ONE COMMUNITY</p>
+                </div>
+            </div>
+            <div class="flex bg-white/20 p-0.5 rounded-lg border border-white/30">
+                <button id="tab-fixtures-btn" onclick="switchTab('fixtures')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg">Fixtures</button>
+                <button id="tab-standings-btn" onclick="switchTab('standings')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-white">Standings</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-3 py-5 flex-1 w-full">
+        <div class="grid grid-cols-2 gap-2 mb-5">
+            <div class="bg-white border border-blue-100 p-3 rounded-xl flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-shield-halved text-[#003399] text-sm"></i>
+                <div><span class="text-[8px] text-slate-500 block uppercase">TEAMS</span><span class="text-sm font-bold text-slate-800">12</span></div>
+            </div>
+            <div class="bg-white border border-blue-100 p-3 rounded-xl flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-calendar-check text-[#003399] text-sm"></i>
+                <div><span class="text-[8px] text-slate-500 block uppercase">MATCHES</span><span class="text-sm font-bold text-slate-800">66</span></div>
+            </div>
+        </div>
+
+        <div id="tab-fixtures-content" class="space-y-4">
+            <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+                <span class="text-[10px] font-bold text-[#003399] uppercase mb-2 block">Matchday Selector</span>
+                <div class="flex gap-2 overflow-x-auto scrollbar-hidden pb-1" id="matchday-selector-container"></div>
+            </div>
+
+            <div class="flex justify-between items-center bg-[#003399] p-3 rounded-xl shadow-lg">
+                <h2 class="text-sm font-black text-white" id="fixture-round-title">ROUND 1</h2>
+                <div class="flex gap-1">
+                    <button onclick="changeMatchday(-1)" class="w-8 h-8 bg-white/20 rounded-lg text-white"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button onclick="changeMatchday(1)" class="w-8 h-8 bg-white/20 rounded-lg text-white"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-3" id="fixtures-grid"></div>
+        </div>
+
+        <div id="tab-standings-content" class="hidden space-y-4">
+            <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto text-[10px] shadow-sm">
+                <table class="w-full text-center min-w-[500px]">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr class="text-slate-600">
+                            <th class="py-3 px-2">#</th>
+                            <th class="py-3 text-left pl-2">TEAM</th>
+                            <th class="py-3">M</th>
+                            <th class="py-3">W</th>
+                            <th class="py-3">D</th>
+                            <th class="py-3">L</th>
+                            <th class="py-3 hidden sm:table-cell">GF</th>
+                            <th class="py-3 hidden sm:table-cell">GA</th>
+                            <th class="py-3">GD</th>
+                            <th class="py-3 text-[#003399]">pts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-table-body" class="divide-y divide-slate-100 font-medium text-slate-800"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const TEAMS_LIST = [
+            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/250px-FC_Internazionale_Milano_2021.svg.png" },
+            { id: "MIL", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg" },
+            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg" },
+            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/S.S._Lazio_badge.svg/1280px-S.S._Lazio_badge.svg.png" },
+            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg" },
+            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1280px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png" },
+            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/commons/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg" },
+            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg" },
+            { id: "ATA", name: "Atalanta", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Atalanta_BC_new_logo.svg/1280px-Atalanta_BC_new_logo.svg.png" },
+            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/1280px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png" },
+            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/9/92/Hellas_Verona_FC_logo_%282020%29.svg" },
+            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Torino_FC_Logo.svg/1280px-Torino_FC_Logo.svg.png" }
+        ].map(t => ({...t, mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pts:0}));
+
+        let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
+
+        window.onload = function() { 
+            generateFixedRoundRobinFixtures(); 
+            renderMatchdaySelector(); 
+            renderFixtures(); 
+        };
+
+        function switchTab(tab) {
+            document.getElementById('tab-fixtures-content').classList.toggle('hidden', tab !== 'fixtures');
+            document.getElementById('tab-standings-content').classList.toggle('hidden', tab !== 'standings');
+            
+            document.getElementById('tab-fixtures-btn').className = tab === 'fixtures' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
+            document.getElementById('tab-standings-btn').className = tab === 'standings' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
+
+            if(tab === 'standings') updateStandingsTable();
+        }
+
+        function generateFixedRoundRobinFixtures() {
+            const numTeams = TEAMS_LIST.length;
+            for (let round = 0; round < numTeams - 1; round++) {
+                const roundMatches = [];
+                for (let i = 0; i < numTeams / 2; i++) {
+                    const home = (round + i) % (numTeams - 1), away = (i === 0) ? numTeams - 1 : (numTeams - 1 - i + round) % (numTeams - 1);
+                    roundMatches.push({ home: TEAMS_LIST[home].id, away: TEAMS_LIST[away].id });
+                }
+                fixtures.push(roundMatches);
+            }
+        }
+
+        function renderMatchdaySelector() {
+            const container = document.getElementById('matchday-selector-container');
+            for (let r = 0; r < TOTAL_ROUNDS; r++) {
+                const btn = document.createElement('button');
+                btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === 0 ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                btn.innerText = `R${r + 1}`;
+                btn.onclick = () => { 
+                    currentViewingMatchday = r; 
+                    document.querySelectorAll('#matchday-selector-container button').forEach((b, idx) => {
+                        b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === r ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                    });
+                    renderFixtures(); 
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        function renderFixtures() {
+            const container = document.getElementById('fixtures-grid');
+            container.innerHTML = '';
+            document.getElementById('fixture-round-title').innerText = `ROUND ${currentViewingMatchday + 1}`;
+            fixtures[currentViewingMatchday].forEach(match => {
+                const h = TEAMS_LIST.find(t => t.id === match.home), a = TEAMS_LIST.find(t => t.id === match.away);
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm";
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 w-[40%]">
+                        <img src="${h.logo}" class="w-8 h-8 object-contain">
+                        <span class="text-xs font-bold truncate text-slate-700">${h.name}</span>
+                    </div>
+                    <span class="text-[#003399] font-black text-[10px] w-[20%] text-center">VS</span>
+                    <div class="flex items-center gap-2 w-[40%] justify-end">
+                        <span class="text-xs font-bold truncate text-slate-700">${a.name}</span>
+                        <img src="${a.logo}" class="w-8 h-8 object-contain">
+                    </div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function updateStandingsTable() {
+            const tbody = document.getElementById('standings-table-body');
+            const sortedTeams = [...TEAMS_LIST].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+            
+            tbody.innerHTML = sortedTeams.map((team, idx) => `
+                <tr class="hover:bg-blue-50 transition-colors">
+                    <td class="py-3 px-2 text-slate-500">${idx+1}</td>
+                    <td class="text-left py-3 pl-2">
+                        <div class="flex items-center gap-2">
+                            <img src="${team.logo}" class="w-5 h-5 object-contain">
+                            <span class="font-bold text-slate-800">${team.name}</span>
+                        </div>
+                    </td>
+                    <td class="py-3">${team.mp}</td>
+                    <td class="py-3">${team.w}</td>
+                    <td class="py-3">${team.d}</td>
+                    <td class="py-3">${team.l}</td>
+                    <td class="py-3 hidden sm:table-cell">${team.gf}</td>
+                    <td class="py-3 hidden sm:table-cell">${team.ga}</td>
+                    <td class="py-3">${team.gd}</td>
+                    <td class="py-3 font-black text-[#003399]">${team.pts}</td>
+                </tr>
+            `).join('');
+        }
+        
+        function changeMatchday(d) {
+            let n = currentViewingMatchday + d;
+            if (n >= 0 && n < TOTAL_ROUNDS) { 
+                currentViewingMatchday = n; 
+                document.querySelectorAll('#matchday-selector-container button').forEach((b, idx) => {
+                    b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === n ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                });
+                renderFixtures(); 
+            }
+        }
+    </script>
+</body>
+</html>
