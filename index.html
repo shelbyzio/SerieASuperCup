@@ -100,15 +100,22 @@
             { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Torino_FC_Logo.svg/1280px-Torino_FC_Logo.svg.png", tg: "https://t.me/Nyi2005MAY" }
         ].map(t => ({...t, mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pts:0}));
 
-        // Results Object
         const MATCH_RESULTS = {
-            0: [ // Round 1
+            0: [ 
                 { home: 'INT', away: 'TOR', hScore: 0, aScore: 2 },
-                { home: 'MIL', away: 'VER' }, // ပွဲမကန်ရသေးလို့ ရလဒ်မထည့်ပါ
+                { home: 'MIL', away: 'VER', hScore: 0, aScore: 5 },
                 { home: 'JUV', away: 'PAR', hScore: 5, aScore: 2 },
                 { home: 'LAZ', away: 'ATA', hScore: 3, aScore: 4 },
                 { home: 'ROM', away: 'NAP', hScore: 0, aScore: 5 },
-                { home: 'FIO', away: 'COM', hScore: 4, aScore: 1 },
+                { home: 'FIO', away: 'COM', hScore: 4, aScore: 1 }
+            ],
+            1: [
+                { home: 'MIL', away: 'TOR', hScore: 4, aScore: 3 },
+                { home: 'JUV', away: 'INT', hScore: 6, aScore: 0 },
+                { home: 'LAZ', away: 'VER' }, 
+                { home: 'ROM', away: 'PAR', hScore: 3, aScore: 5 },
+                { home: 'FIO', away: 'ATA', hScore: 1, aScore: 2 },
+                { home: 'COM', away: 'NAP', hScore: 0, aScore: 2 }
             ]
         };
 
@@ -124,10 +131,8 @@
         function switchTab(tab) {
             document.getElementById('tab-fixtures-content').classList.toggle('hidden', tab !== 'fixtures');
             document.getElementById('tab-standings-content').classList.toggle('hidden', tab !== 'standings');
-            
             document.getElementById('tab-fixtures-btn').className = tab === 'fixtures' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
             document.getElementById('tab-standings-btn').className = tab === 'standings' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
-
             if(tab === 'standings') updateStandingsTable();
         }
 
@@ -145,19 +150,15 @@
 
         function calculateStandings() {
             TEAMS_LIST.forEach(t => { t.mp=0; t.w=0; t.d=0; t.l=0; t.gf=0; t.ga=0; t.gd=0; t.pts=0; });
-            
             Object.values(MATCH_RESULTS).forEach(round => {
                 round.forEach(match => {
-                    // ပွဲရလဒ် (Score) ရှိမှသာ တွက်ချက်ပါမည်
                     if (match.hScore !== undefined && match.aScore !== undefined) {
                         const h = TEAMS_LIST.find(t => t.id === match.home);
                         const a = TEAMS_LIST.find(t => t.id === match.away);
-                        
                         h.mp++; a.mp++;
                         h.gf += match.hScore; h.ga += match.aScore;
                         a.gf += match.aScore; a.ga += match.hScore;
                         h.gd = h.gf - h.ga; a.gd = a.gf - a.ga;
-
                         if (match.hScore > match.aScore) { h.pts += 3; h.w++; a.l++; }
                         else if (match.hScore < match.aScore) { a.pts += 3; a.w++; h.l++; }
                         else { h.pts += 1; a.pts += 1; h.d++; a.d++; }
@@ -187,28 +188,23 @@
             const container = document.getElementById('fixtures-grid');
             container.innerHTML = '';
             document.getElementById('fixture-round-title').innerText = `ROUND ${currentViewingMatchday + 1}`;
-            
             fixtures[currentViewingMatchday].forEach(match => {
                 const h = TEAMS_LIST.find(t => t.id === match.home);
                 const a = TEAMS_LIST.find(t => t.id === match.away);
-                
-                // Check if result exists and has scores
                 const result = MATCH_RESULTS[currentViewingMatchday]?.find(r => r.home === h.id && r.away === a.id);
                 const hasScore = result && result.hScore !== undefined && result.aScore !== undefined;
                 
                 const card = document.createElement('div');
                 card.className = "bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm";
                 card.innerHTML = `
-                    <a href="${h.tg}" target="_blank" class="flex items-center gap-2 w-[40%] cursor-pointer hover:opacity-70">
-                        <img src="${h.logo}" class="w-8 h-8 object-contain">
-                        <span class="text-xs font-bold truncate text-slate-700">${h.name}</span>
+                    <a href="${h.tg}" target="_blank" class="flex items-center gap-2 w-[40%] hover:opacity-70">
+                        <img src="${h.logo}" class="w-8 h-8 object-contain"><span class="text-xs font-bold truncate text-slate-700">${h.name}</span>
                     </a>
                     <div class="flex flex-col items-center w-[20%]">
                         ${hasScore ? `<span class="text-[#003399] font-black text-sm">${result.hScore} - ${result.aScore}</span>` : '<span class="text-[#003399] font-black text-[10px]">VS</span>'}
                     </div>
-                    <a href="${a.tg}" target="_blank" class="flex items-center gap-2 w-[40%] justify-end cursor-pointer hover:opacity-70">
-                        <span class="text-xs font-bold truncate text-slate-700">${a.name}</span>
-                        <img src="${a.logo}" class="w-8 h-8 object-contain">
+                    <a href="${a.tg}" target="_blank" class="flex items-center gap-2 w-[40%] justify-end hover:opacity-70">
+                        <span class="text-xs font-bold truncate text-slate-700">${a.name}</span><img src="${a.logo}" class="w-8 h-8 object-contain">
                     </a>`;
                 container.appendChild(card);
             });
@@ -217,22 +213,16 @@
         function updateStandingsTable() {
             const tbody = document.getElementById('standings-table-body');
             const sortedTeams = [...TEAMS_LIST].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-            
             tbody.innerHTML = sortedTeams.map((team, idx) => `
                 <tr class="hover:bg-blue-50 transition-colors">
                     <td class="py-3 px-2 text-slate-500">${idx+1}</td>
                     <td class="text-left py-3 pl-2">
-                        <a href="${team.tg}" target="_blank" class="flex items-center gap-2 cursor-pointer hover:underline">
-                            <img src="${team.logo}" class="w-5 h-5 object-contain">
-                            <span class="font-bold text-slate-800">${team.name}</span>
+                        <a href="${team.tg}" target="_blank" class="flex items-center gap-2 hover:underline">
+                            <img src="${team.logo}" class="w-5 h-5 object-contain"><span class="font-bold text-slate-800">${team.name}</span>
                         </a>
                     </td>
-                    <td class="py-3">${team.mp}</td>
-                    <td class="py-3">${team.w}</td>
-                    <td class="py-3">${team.d}</td>
-                    <td class="py-3">${team.l}</td>
-                    <td class="py-3">${team.gd}</td>
-                    <td class="py-3 font-black text-[#003399]">${team.pts}</td>
+                    <td class="py-3">${team.mp}</td><td class="py-3">${team.w}</td><td class="py-3">${team.d}</td><td class="py-3">${team.l}</td>
+                    <td class="py-3">${team.gd}</td><td class="py-3 font-black text-[#003399]">${team.pts}</td>
                 </tr>
             `).join('');
         }
