@@ -101,38 +101,19 @@
         ].map(t => ({...t, mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pts:0}));
 
         const MATCH_RESULTS = {
-            0: [ 
-                { home: 'INT', away: 'TOR', hScore: 0, aScore: 2 },
-                { home: 'MIL', away: 'VER', hScore: 0, aScore: 5 },
-                { home: 'JUV', away: 'PAR', hScore: 5, aScore: 2 },
-                { home: 'LAZ', away: 'ATA', hScore: 3, aScore: 4 },
-                { home: 'ROM', away: 'NAP', hScore: 0, aScore: 5 },
-                { home: 'FIO', away: 'COM', hScore: 4, aScore: 1 }
+            0: [{ home: 'INT', away: 'TOR', hScore: 0, aScore: 2 }, { home: 'MIL', away: 'VER', hScore: 0, aScore: 5 }, { home: 'JUV', away: 'PAR', hScore: 5, aScore: 2 }, { home: 'LAZ', away: 'ATA', hScore: 3, aScore: 4 }, { home: 'ROM', away: 'NAP', hScore: 0, aScore: 5 }, { home: 'FIO', away: 'COM', hScore: 4, aScore: 1 }],
+            1: [{ home: 'MIL', away: 'TOR', hScore: 4, aScore: 3 }, { home: 'JUV', away: 'INT', hScore: 6, aScore: 0 }, { home: 'LAZ', away: 'VER', hScore: 5, aScore: 3 }, { home: 'ROM', away: 'PAR', hScore: 3, aScore: 5 }, { home: 'FIO', away: 'ATA', hScore: 1, aScore: 2 }, { home: 'COM', away: 'NAP', hScore: 0, aScore: 2 }],
+            2: [{ home: 'JUV', away: 'TOR', hScore: 9, aScore: 4 }, { home: 'LAZ', away: 'MIL', hScore: 8, aScore: 3 }, { home: 'ROM', away: 'INT', hScore: 3, aScore: 0 }, { home: 'FIO', away: 'VER', hScore: 3, aScore: 1 }, { home: 'COM', away: 'PAR', hScore: 3, aScore: 4 }, { home: 'NAP', away: 'ATA', hScore: 6, aScore: 0 }],
+            3: [{ home: 'LAZ', away: 'TOR', hScore: 4, aScore: 3 }, { home: 'ROM', away: 'JUV', hScore: 3, aScore: 5 }, { home: 'FIO', away: 'MIL', hScore: 3, aScore: 0 }, { home: 'COM', away: 'INT', hScore: 3, aScore: 0 }, { home: 'NAP', away: 'VER', hScore: 5, aScore: 0 }, { home: 'ATA', away: 'PAR', hScore: 1, aScore: 5 }],
+            4: [
+                { home: 'NAP', away: 'MIL', hScore: 6, aScore: 0 }, 
+                { home: 'COM', away: 'JUV', hScore: 5, aScore: 2 }, 
+                { home: 'ATA', away: 'INT', hScore: 8, aScore: 0 },
+                { home: 'ROM', away: 'TOR', hScore: 6, aScore: 3 }, 
+                { home: 'FIO', away: 'LAZ', hScore: 3, aScore: 3 }, 
+                { home: 'PAR', away: 'VER', hScore: 6, aScore: 1 }
             ],
-            1: [
-                { home: 'MIL', away: 'TOR', hScore: 4, aScore: 3 },
-                { home: 'JUV', away: 'INT', hScore: 6, aScore: 0 },
-                { home: 'LAZ', away: 'VER', hScore: 5, aScore: 3 }, 
-                { home: 'ROM', away: 'PAR', hScore: 3, aScore: 5 },
-                { home: 'FIO', away: 'ATA', hScore: 1, aScore: 2 },
-                { home: 'COM', away: 'NAP', hScore: 0, aScore: 2 }
-            ],
-            2: [
-                { home: 'JUV', away: 'TOR', hScore: 9, aScore: 4 },
-                { home: 'LAZ', away: 'MIL', hScore: 8, aScore: 3 },
-                { home: 'ROM', away: 'INT', hScore: 3, aScore: 0 },
-                { home: 'FIO', away: 'VER', hScore: 3, aScore: 1 },
-                { home: 'COM', away: 'PAR', hScore: 3, aScore: 4 },
-                { home: 'NAP', away: 'ATA', hScore: 6, aScore: 0 }
-            ],
-            3: [
-                { home: 'LAZ', away: 'TOR', hScore: 4, aScore: 3 },
-                { home: 'ROM', away: 'JUV', hScore: 3, aScore: 5 },
-                { home: 'FIO', away: 'MIL', hScore: 3, aScore: 0 },
-                { home: 'COM', away: 'INT', hScore: 3, aScore: 0 },
-                { home: 'NAP', away: 'VER', hScore: 5, aScore: 0 },
-                { home: 'ATA', away: 'PAR', hScore: 1, aScore: 5 }
-            ]
+            5: [{ home: 'FIO', away: 'TOR', hScore: 1, aScore: 3 }, { home: 'COM', away: 'ROM', hScore: 5, aScore: 2 }, { home: 'NAP', away: 'LAZ', hScore: 11, aScore: 2 }, { home: 'ATA', away: 'JUV', hScore: 1, aScore: 4 }, { home: 'PAR', away: 'MIL', hScore: 3, aScore: 0 }, { home: 'VER', away: 'INT', hScore: 0, aScore: 3 }]
         };
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
@@ -162,6 +143,16 @@
                 }
                 fixtures.push(roundMatches);
             }
+            
+            // Fix specifically for Round 5 (index 4) to match the custom results
+            fixtures[4] = [
+                { home: 'NAP', away: 'MIL' }, 
+                { home: 'COM', away: 'JUV' }, 
+                { home: 'ATA', away: 'INT' },
+                { home: 'ROM', away: 'TOR' }, 
+                { home: 'FIO', away: 'LAZ' }, 
+                { home: 'PAR', away: 'VER' }
+            ];
         }
 
         function calculateStandings() {
@@ -171,6 +162,7 @@
                     if (match.hScore !== undefined && match.aScore !== undefined) {
                         const h = TEAMS_LIST.find(t => t.id === match.home);
                         const a = TEAMS_LIST.find(t => t.id === match.away);
+                        if(!h || !a) return;
                         h.mp++; a.mp++;
                         h.gf += match.hScore; h.ga += match.aScore;
                         a.gf += match.aScore; a.ga += match.hScore;
@@ -185,6 +177,7 @@
 
         function renderMatchdaySelector() {
             const container = document.getElementById('matchday-selector-container');
+            container.innerHTML = '';
             for (let r = 0; r < TOTAL_ROUNDS; r++) {
                 const btn = document.createElement('button');
                 btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === 0 ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
@@ -204,6 +197,7 @@
             const container = document.getElementById('fixtures-grid');
             container.innerHTML = '';
             document.getElementById('fixture-round-title').innerText = `ROUND ${currentViewingMatchday + 1}`;
+            if(!fixtures[currentViewingMatchday]) return;
             fixtures[currentViewingMatchday].forEach(match => {
                 const h = TEAMS_LIST.find(t => t.id === match.home);
                 const a = TEAMS_LIST.find(t => t.id === match.away);
@@ -227,6 +221,7 @@
         }
 
         function updateStandingsTable() {
+            calculateStandings();
             const tbody = document.getElementById('standings-table-body');
             const sortedTeams = [...TEAMS_LIST].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
             tbody.innerHTML = sortedTeams.map((team, idx) => `
