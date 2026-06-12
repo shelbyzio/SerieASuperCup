@@ -110,7 +110,8 @@
             6: [{ home: 'COM', away: 'TOR', hScore: 0, aScore: 3 }, { home: 'NAP', away: 'FIO', hScore: 5, aScore: 2 }, { home: 'ATA', away: 'ROM', hScore: 4, aScore: 1 }, { home: 'PAR', away: 'LAZ', hScore: 2, aScore: 1 }, { home: 'VER', away: 'JUV', hScore: 0, aScore: 3 }, { home: 'INT', away: 'MIL', hScore: 3, aScore: 0 }],
             7: [{ home: 'NAP', away: 'TOR', hScore: 10, aScore: 0 }, { home: 'ATA', away: 'COM', hScore: 2, aScore: 2 }, { home: 'PAR', away: 'FIO', hScore: 3, aScore: 2 }, { home: 'VER', away: 'ROM', hScore: 0, aScore: 3 }, { home: 'INT', away: 'LAZ', hScore: 3, aScore: 4 }, { home: 'MIL', away: 'JUV', hScore: 0, aScore: 3 }],
             8: [{ home: 'ATA', away: 'TOR', hScore: 7, aScore: 2 }, { home: 'PAR', away: 'NAP', hScore: 3, aScore: 2 }, { home: 'VER', away: 'COM', hScore: 0, aScore: 3 }, { home: 'INT', away: 'FIO', hScore: 0, aScore: 9 }, { home: 'MIL', away: 'ROM', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'LAZ', hScore: 6, aScore: 3 }],
-            9: [{ home: 'PAR', away: 'TOR', hScore: 3, aScore: 1 }, { home: 'VER', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'INT', away: 'NAP', hScore: 0, aScore: 7 }, { home: 'MIL', away: 'COM', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'FIO', hScore: 4, aScore: 6 }, { home: 'LAZ', away: 'ROM', hScore: 3, aScore: 0 }]
+            9: [{ home: 'PAR', away: 'TOR', hScore: 3, aScore: 1 }, { home: 'VER', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'INT', away: 'NAP', hScore: 0, aScore: 7 }, { home: 'MIL', away: 'COM', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'FIO', hScore: 4, aScore: 6 }, { home: 'LAZ', away: 'ROM', hScore: 3, aScore: 0 }],
+            10: [{ home: 'VER', away: 'TOR', hScore: 0, aScore: 3 }, { home: 'INT', away: 'PAR', hScore: 0, aScore: 3 }, { home: 'MIL', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'NAP', hScore: 0, aScore: 6 }, { home: 'LAZ', away: 'COM', hScore: 4, aScore: 1 }, { home: 'ROM', away: 'FIO', hScore: 4, aScore: 7 }]
         };
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
@@ -140,7 +141,6 @@
                 }
                 fixtures.push(roundMatches);
             }
-            // Overrides for specific rounds
             fixtures[4] = [{ home: 'NAP', away: 'MIL' }, { home: 'COM', away: 'JUV' }, { home: 'ATA', away: 'INT' }, { home: 'ROM', away: 'TOR' }, { home: 'FIO', away: 'LAZ' }, { home: 'PAR', away: 'VER' }];
             fixtures[6] = [{ home: 'COM', away: 'TOR' }, { home: 'NAP', away: 'FIO' }, { home: 'ATA', away: 'ROM' }, { home: 'PAR', away: 'LAZ' }, { home: 'VER', away: 'JUV' }, { home: 'INT', away: 'MIL' }];
             fixtures[7] = [{ home: 'NAP', away: 'TOR' }, { home: 'ATA', away: 'COM' }, { home: 'PAR', away: 'FIO' }, { home: 'VER', away: 'ROM' }, { home: 'INT', away: 'LAZ' }, { home: 'MIL', away: 'JUV' }];
