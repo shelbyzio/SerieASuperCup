@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serie A Style 12-Team Tournament Hub</title>
+    <title>Serie A Tournament Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -36,17 +36,6 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-3 py-5 flex-1 w-full">
-        <div class="grid grid-cols-2 gap-2 mb-5">
-            <div class="bg-white border border-blue-100 p-3 rounded-xl flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-shield-halved text-[#003399] text-sm"></i>
-                <div><span class="text-[8px] text-slate-500 block uppercase">TEAMS</span><span class="text-sm font-bold text-slate-800">12</span></div>
-            </div>
-            <div class="bg-white border border-blue-100 p-3 rounded-xl flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-calendar-check text-[#003399] text-sm"></i>
-                <div><span class="text-[8px] text-slate-500 block uppercase">MATCHES</span><span class="text-sm font-bold text-slate-800">66</span></div>
-            </div>
-        </div>
-
         <div id="tab-fixtures-content" class="space-y-4">
             <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
                 <span class="text-[10px] font-bold text-[#003399] uppercase mb-2 block">Matchday Selector</span>
@@ -86,32 +75,34 @@
 
     <script>
         const TEAMS_LIST = [
-            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/250px-FC_Internazionale_Milano_2021.svg.png", tg: "https://t.me/ChamThar969" },
-            { id: "MIL", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg", tg: "https://t.me/PUTU200" },
-            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg", tg: "https://t.me/ChanBoBoAuung" },
-            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/S.S._Lazio_badge.svg/1280px-S.S._Lazio_badge.svg.png", tg: "https://t.me/tnmnt46" },
-            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg", tg: "https://t.me/iluv_Nadi" },
-            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1280px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png", tg: "https://t.me/AungZinPhyo1992" },
-            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/commons/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg", tg: "https://t.me/madridkoko" },
-            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg", tg: "https://t.me/alpheo_x" },
-            { id: "ATA", name: "Atalanta", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Atalanta_BC_new_logo.svg/1280px-Atalanta_BC_new_logo.svg.png", tg: "https://t.me/Phaint_Phaint" },
-            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/1280px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png", tg: "https://t.me/WaiLin786" },
-            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/9/92/Hellas_Verona_FC_logo_%282020%29.svg", tg: "https://t.me/" },
-            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Torino_FC_Logo.svg/1280px-Torino_FC_Logo.svg.png", tg: "https://t.me/Nyi2005MAY" }
+            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/250px-FC_Internazionale_Milano_2021.svg.png", tg: "https://t.me/Tomato_2k8" },
+            { id: "MIL", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg", tg: "https://t.me/myothetnaing56" },
+            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg", tg: "https://t.me/Jame0988" },
+            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/S.S._Lazio_badge.svg/1280px-S.S._Lazio_badge.svg.png", tg: "https://t.me/Masterdaddy358649" },
+            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg", tg: "https://t.me/Bhone3245" },
+            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1280px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png", tg: "https://t.me/ZINEZAME" },
+            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/commons/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg", tg: "https://t.me/Ro_Min_Htet" },
+            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg", tg: "https://t.me/lexaonyx" },
+            { id: "ATA", name: "Atalanta", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Atalanta_BC_new_logo.svg/1280px-Atalanta_BC_new_logo.svg.png", tg: "https://t.me/ZawGay1234567890" },
+            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/1280px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png", tg: "https://t.me/ptkyaw87" },
+            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/9/92/Hellas_Verona_FC_logo_%282020%29.svg", tg: "https://t.me/Martivs22" },
+            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Torino_FC_Logo.svg/1280px-Torino_FC_Logo.svg.png", tg: "https://t.me/Nashhll" }
         ].map(t => ({...t, mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pts:0}));
 
+        // EDIT RESULTS BELOW: hScore: 0, aScore: 0 ဆိုတဲ့နေရာမှာ အမှတ်ထည့်ပါ။
+        // အမှတ်မထည့်ရသေးရင် null ထားပါ။
         const MATCH_RESULTS = {
-            0: [{ home: 'INT', away: 'TOR', hScore: 0, aScore: 2 }, { home: 'MIL', away: 'VER', hScore: 0, aScore: 5 }, { home: 'JUV', away: 'PAR', hScore: 5, aScore: 2 }, { home: 'LAZ', away: 'ATA', hScore: 3, aScore: 4 }, { home: 'ROM', away: 'NAP', hScore: 0, aScore: 5 }, { home: 'FIO', away: 'COM', hScore: 4, aScore: 1 }],
-            1: [{ home: 'MIL', away: 'TOR', hScore: 4, aScore: 3 }, { home: 'JUV', away: 'INT', hScore: 6, aScore: 0 }, { home: 'LAZ', away: 'VER', hScore: 5, aScore: 3 }, { home: 'ROM', away: 'PAR', hScore: 3, aScore: 5 }, { home: 'FIO', away: 'ATA', hScore: 1, aScore: 2 }, { home: 'COM', away: 'NAP', hScore: 0, aScore: 2 }],
-            2: [{ home: 'JUV', away: 'TOR', hScore: 9, aScore: 4 }, { home: 'LAZ', away: 'MIL', hScore: 8, aScore: 3 }, { home: 'ROM', away: 'INT', hScore: 3, aScore: 0 }, { home: 'FIO', away: 'VER', hScore: 3, aScore: 1 }, { home: 'COM', away: 'PAR', hScore: 3, aScore: 4 }, { home: 'NAP', away: 'ATA', hScore: 6, aScore: 0 }],
-            3: [{ home: 'LAZ', away: 'TOR', hScore: 4, aScore: 3 }, { home: 'ROM', away: 'JUV', hScore: 3, aScore: 5 }, { home: 'FIO', away: 'MIL', hScore: 3, aScore: 0 }, { home: 'COM', away: 'INT', hScore: 3, aScore: 0 }, { home: 'NAP', away: 'VER', hScore: 5, aScore: 0 }, { home: 'ATA', away: 'PAR', hScore: 1, aScore: 5 }],
-            4: [{ home: 'NAP', away: 'MIL', hScore: 6, aScore: 0 }, { home: 'COM', away: 'JUV', hScore: 5, aScore: 2 }, { home: 'ATA', away: 'INT', hScore: 8, aScore: 0 }, { home: 'ROM', away: 'TOR', hScore: 6, aScore: 3 }, { home: 'FIO', away: 'LAZ', hScore: 3, aScore: 3 }, { home: 'PAR', away: 'VER', hScore: 6, aScore: 1 }],
-            5: [{ home: 'FIO', away: 'TOR', hScore: 1, aScore: 3 }, { home: 'COM', away: 'ROM', hScore: 1, aScore: 2 }, { home: 'NAP', away: 'LAZ', hScore: 11, aScore: 2 }, { home: 'ATA', away: 'JUV', hScore: 1, aScore: 4 }, { home: 'PAR', away: 'MIL', hScore: 3, aScore: 0 }, { home: 'VER', away: 'INT', hScore: 0, aScore: 3 }],
-            6: [{ home: 'COM', away: 'TOR', hScore: 0, aScore: 3 }, { home: 'NAP', away: 'FIO', hScore: 5, aScore: 2 }, { home: 'ATA', away: 'ROM', hScore: 4, aScore: 1 }, { home: 'PAR', away: 'LAZ', hScore: 2, aScore: 1 }, { home: 'VER', away: 'JUV', hScore: 0, aScore: 3 }, { home: 'INT', away: 'MIL', hScore: 3, aScore: 0 }],
-            7: [{ home: 'NAP', away: 'TOR', hScore: 10, aScore: 0 }, { home: 'ATA', away: 'COM', hScore: 2, aScore: 2 }, { home: 'PAR', away: 'FIO', hScore: 3, aScore: 2 }, { home: 'VER', away: 'ROM', hScore: 0, aScore: 3 }, { home: 'INT', away: 'LAZ', hScore: 3, aScore: 4 }, { home: 'MIL', away: 'JUV', hScore: 0, aScore: 3 }],
-            8: [{ home: 'ATA', away: 'TOR', hScore: 7, aScore: 2 }, { home: 'PAR', away: 'NAP', hScore: 3, aScore: 2 }, { home: 'VER', away: 'COM', hScore: 0, aScore: 3 }, { home: 'INT', away: 'FIO', hScore: 0, aScore: 9 }, { home: 'MIL', away: 'ROM', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'LAZ', hScore: 6, aScore: 3 }],
-            9: [{ home: 'PAR', away: 'TOR', hScore: 3, aScore: 1 }, { home: 'VER', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'INT', away: 'NAP', hScore: 0, aScore: 7 }, { home: 'MIL', away: 'COM', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'FIO', hScore: 4, aScore: 6 }, { home: 'LAZ', away: 'ROM', hScore: 3, aScore: 0 }],
-            10: [{ home: 'VER', away: 'TOR', hScore: 0, aScore: 3 }, { home: 'INT', away: 'PAR', hScore: 0, aScore: 3 }, { home: 'MIL', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'JUV', away: 'NAP', hScore: 0, aScore: 6 }, { home: 'LAZ', away: 'COM', hScore: 4, aScore: 1 }, { home: 'ROM', away: 'FIO', hScore: 4, aScore: 7 }]
+            0: [{ home: 'INT', away: 'TOR', hScore: null, aScore: null }, { home: 'MIL', away: 'VER', hScore: null, aScore: null }, { home: 'JUV', away: 'PAR', hScore: null, aScore: null }, { home: 'LAZ', away: 'ATA', hScore: null, aScore: null }, { home: 'ROM', away: 'NAP', hScore: null, aScore: null }, { home: 'FIO', away: 'COM', hScore: null, aScore: null }],
+            1: [{ home: 'MIL', away: 'TOR', hScore: null, aScore: null }, { home: 'JUV', away: 'INT', hScore: null, aScore: null }, { home: 'LAZ', away: 'VER', hScore: null, aScore: null }, { home: 'ROM', away: 'PAR', hScore: null, aScore: null }, { home: 'FIO', away: 'ATA', hScore: null, aScore: null }, { home: 'COM', away: 'NAP', hScore: null, aScore: null }],
+            2: [{ home: 'JUV', away: 'TOR', hScore: null, aScore: null }, { home: 'LAZ', away: 'MIL', hScore: null, aScore: null }, { home: 'ROM', away: 'INT', hScore: null, aScore: null }, { home: 'FIO', away: 'VER', hScore: null, aScore: null }, { home: 'COM', away: 'PAR', hScore: null, aScore: null }, { home: 'NAP', away: 'ATA', hScore: null, aScore: null }],
+            3: [{ home: 'LAZ', away: 'TOR', hScore: null, aScore: null }, { home: 'ROM', away: 'JUV', hScore: null, aScore: null }, { home: 'FIO', away: 'MIL', hScore: null, aScore: null }, { home: 'COM', away: 'INT', hScore: null, aScore: null }, { home: 'NAP', away: 'VER', hScore: null, aScore: null }, { home: 'ATA', away: 'PAR', hScore: null, aScore: null }],
+            4: [{ home: 'NAP', away: 'MIL', hScore: null, aScore: null }, { home: 'COM', away: 'JUV', hScore: null, aScore: null }, { home: 'ATA', away: 'INT', hScore: null, aScore: null }, { home: 'ROM', away: 'TOR', hScore: null, aScore: null }, { home: 'FIO', away: 'LAZ', hScore: null, aScore: null }, { home: 'PAR', away: 'VER', hScore: null, aScore: null }],
+            5: [{ home: 'FIO', away: 'TOR', hScore: null, aScore: null }, { home: 'COM', away: 'ROM', hScore: null, aScore: null }, { home: 'NAP', away: 'LAZ', hScore: null, aScore: null }, { home: 'ATA', away: 'JUV', hScore: null, aScore: null }, { home: 'PAR', away: 'MIL', hScore: null, aScore: null }, { home: 'VER', away: 'INT', hScore: null, aScore: null }],
+            6: [{ home: 'COM', away: 'TOR', hScore: null, aScore: null }, { home: 'NAP', away: 'FIO', hScore: null, aScore: null }, { home: 'ATA', away: 'ROM', hScore: null, aScore: null }, { home: 'PAR', away: 'LAZ', hScore: null, aScore: null }, { home: 'VER', away: 'JUV', hScore: null, aScore: null }, { home: 'INT', away: 'MIL', hScore: null, aScore: null }],
+            7: [{ home: 'NAP', away: 'TOR', hScore: null, aScore: null }, { home: 'ATA', away: 'COM', hScore: null, aScore: null }, { home: 'PAR', away: 'FIO', hScore: null, aScore: null }, { home: 'VER', away: 'ROM', hScore: null, aScore: null }, { home: 'INT', away: 'LAZ', hScore: null, aScore: null }, { home: 'MIL', away: 'JUV', hScore: null, aScore: null }],
+            8: [{ home: 'ATA', away: 'TOR', hScore: null, aScore: null }, { home: 'PAR', away: 'NAP', hScore: null, aScore: null }, { home: 'VER', away: 'COM', hScore: null, aScore: null }, { home: 'INT', away: 'FIO', hScore: null, aScore: null }, { home: 'MIL', away: 'ROM', hScore: null, aScore: null }, { home: 'JUV', away: 'LAZ', hScore: null, aScore: null }],
+            9: [{ home: 'PAR', away: 'TOR', hScore: null, aScore: null }, { home: 'VER', away: 'ATA', hScore: null, aScore: null }, { home: 'INT', away: 'NAP', hScore: null, aScore: null }, { home: 'MIL', away: 'COM', hScore: null, aScore: null }, { home: 'JUV', away: 'FIO', hScore: null, aScore: null }, { home: 'LAZ', away: 'ROM', hScore: null, aScore: null }],
+            10: [{ home: 'VER', away: 'TOR', hScore: null, aScore: null }, { home: 'INT', away: 'PAR', hScore: null, aScore: null }, { home: 'MIL', away: 'ATA', hScore: null, aScore: null }, { home: 'JUV', away: 'NAP', hScore: null, aScore: null }, { home: 'LAZ', away: 'COM', hScore: null, aScore: null }, { home: 'ROM', away: 'FIO', hScore: null, aScore: null }]
         };
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
@@ -141,17 +132,13 @@
                 }
                 fixtures.push(roundMatches);
             }
-            fixtures[4] = [{ home: 'NAP', away: 'MIL' }, { home: 'COM', away: 'JUV' }, { home: 'ATA', away: 'INT' }, { home: 'ROM', away: 'TOR' }, { home: 'FIO', away: 'LAZ' }, { home: 'PAR', away: 'VER' }];
-            fixtures[6] = [{ home: 'COM', away: 'TOR' }, { home: 'NAP', away: 'FIO' }, { home: 'ATA', away: 'ROM' }, { home: 'PAR', away: 'LAZ' }, { home: 'VER', away: 'JUV' }, { home: 'INT', away: 'MIL' }];
-            fixtures[7] = [{ home: 'NAP', away: 'TOR' }, { home: 'ATA', away: 'COM' }, { home: 'PAR', away: 'FIO' }, { home: 'VER', away: 'ROM' }, { home: 'INT', away: 'LAZ' }, { home: 'MIL', away: 'JUV' }];
-            fixtures[9] = [{ home: 'PAR', away: 'TOR' }, { home: 'VER', away: 'ATA' }, { home: 'INT', away: 'NAP' }, { home: 'MIL', away: 'COM' }, { home: 'JUV', away: 'FIO' }, { home: 'LAZ', away: 'ROM' }];
         }
 
         function calculateStandings() {
             TEAMS_LIST.forEach(t => { t.mp=0; t.w=0; t.d=0; t.l=0; t.gf=0; t.ga=0; t.gd=0; t.pts=0; });
             Object.values(MATCH_RESULTS).forEach(round => {
                 round.forEach(match => {
-                    if (match.hScore !== undefined && match.aScore !== undefined) {
+                    if (match.hScore !== null && match.aScore !== null) {
                         const h = TEAMS_LIST.find(t => t.id === match.home);
                         const a = TEAMS_LIST.find(t => t.id === match.away);
                         if(!h || !a) return;
@@ -194,7 +181,7 @@
                 const h = TEAMS_LIST.find(t => t.id === match.home);
                 const a = TEAMS_LIST.find(t => t.id === match.away);
                 const result = MATCH_RESULTS[currentViewingMatchday]?.find(r => r.home === h.id && r.away === a.id);
-                const hasScore = result && result.hScore !== undefined && result.aScore !== undefined;
+                const hasScore = result && result.hScore !== null && result.aScore !== null;
                 
                 const card = document.createElement('div');
                 card.className = "bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm";
