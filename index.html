@@ -141,8 +141,8 @@
             projectId: "superepl",
             storageBucket: "superepl.firebasestorage.app",
             messagingSenderId: "885676848744",
-            appId: "1:885676848744:web:593919aefec9df5bc2eddd",
-            measurementId: "G-PSXXFCTPPY"
+            appId: "1:885676848744:web:ac9f912c3f06ecd3c2eddd",
+            measurementId: "G-FNDM2JKVH9"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -150,18 +150,18 @@
         const db = getFirestore(app);
 
         const TEAMS_LIST = [
-            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", telegram: "https://t.me/Wolfy21002" },
-            { id: "ACM", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", telegram: "https://t.me/Sammykaung" },
-            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_Logo_2017.svg", telegram: "https://t.me/bobominhein" },
-            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/MGYeye1473" },
-            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/Sanminoo" },
-            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/iz_szlai" },
-            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/Aung19959" },
-            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/zeusace0" },
-            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/aamk79" },
-            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/" },
-            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/en/6/6f/Parma_Calcio_1913_logo.svg", telegram: "https://t.me/MoungNaing" },
-            { id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/Naindjjd" }
+           { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", telegram: "https://t.me/zayd0408" },
+{ id: "ACM", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", telegram: "https://t.me/channyein199" },
+{ id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_Logo_2017.svg", telegram: "https://t.me/Garniya" },
+{ id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/minkhant090" },
+{ id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/TheinWinn2000" },
+{ id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/Sakmkl" },
+{ id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/zinlin18" },
+{ id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/khant200455" },
+{ id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/htetwaiaung21112002" },
+{ id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/aungnayzan" },
+{ id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/en/6/6f/Parma_Calcio_1913_logo.svg", telegram: "https://t.me/Aungpyinnyar" },
+{ id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/AungZinPhyo1992" }
         ];
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
