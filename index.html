@@ -3,50 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serie A Tournament Hub</title>
+    <title>Premier League Style 12-Team Tournament Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #e2e8f0; }
-        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
-        .scrollbar-hidden::-webkit-scrollbar { display: none; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-
-    <header class="bg-[#003399] border-b-4 border-white sticky top-0 z-50 shadow-md">
+<body class="text-slate-800 bg-slate-100 min-h-screen flex flex-col">
+    <header class="bg-white border-b-4 border-blue-600 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-3 py-3 flex flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-2">
-                <div class="bg-white p-1 rounded-lg h-9 w-9 overflow-hidden flex items-center justify-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ab/Serie_A_ENILIVE_logo.svg/960px-Serie_A_ENILIVE_logo.svg.png" alt="Serie A" class="h-full w-full object-contain">
+                <div class="bg-blue-600 p-1 rounded-lg h-9 w-9 overflow-hidden flex items-center justify-center shadow">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/Serie_A_logo_%282019%29.svg" alt="Serie A" class="h-full w-full object-contain filter brightness-0 invert" crossorigin="anonymous">
                 </div>
                 <div>
-                    <h1 class="text-sm font-black text-white">SERIE <span class="text-white">A</span></h1>
-                    <p class="text-[8px] text-blue-200 font-bold uppercase tracking-widest">THE ONE COMMUNITY</p>
+                    <h1 class="text-sm font-black text-blue-900 tracking-wider">SERIE <span class="text-blue-600">A</span></h1>
+                    <p class="text-[8px] text-slate-500 font-bold uppercase">COMMUNITY TOURNAMENT</p>
                 </div>
             </div>
-            <div class="flex bg-white/20 p-0.5 rounded-lg border border-white/30">
-                <button id="tab-fixtures-btn" onclick="switchTab('fixtures')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg">Fixtures</button>
-                <button id="tab-standings-btn" onclick="switchTab('standings')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-white">Standings</button>
+            <div class="flex items-center gap-2">
+                <button onclick="promptAdminPassword()" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold hover:bg-blue-600 hover:text-white transition shadow-sm">
+                    <i class="fa-solid fa-pen-to-square mr-1"></i> Admin Edit
+                </button>
+                <div class="flex bg-slate-200 p-0.5 rounded-lg border border-slate-300">
+                    <button id="tab-fixtures-btn" onclick="switchTab('fixtures')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-white bg-blue-600 shadow">Fixtures</button>
+                    <button id="tab-standings-btn" onclick="switchTab('standings')" class="px-3 py-1.5 rounded-md text-[10px] font-bold text-slate-600">Standings</button>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-3 py-5 flex-1 w-full">
+        <div class="grid grid-cols-2 gap-2 mb-5">
+            <div class="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-3 shadow-sm">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                    <i class="fa-solid fa-shield-halved text-sm"></i>
+                </div>
+                <div><span class="text-[8px] text-slate-400 block uppercase font-bold">Teams</span><span class="text-sm font-black text-slate-800">12</span></div>
+            </div>
+            <div class="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-3 shadow-sm">
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                    <i class="fa-solid fa-cloud text-sm"></i>
+                </div>
+                <div><span class="text-[8px] text-slate-400 block uppercase font-bold">Database</span><span class="text-xs font-bold text-emerald-600" id="sync-status">Connected</span></div>
+            </div>
+        </div>
+
         <div id="tab-fixtures-content" class="space-y-4">
             <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
-                <span class="text-[10px] font-bold text-[#003399] uppercase mb-2 block">Matchday Selector</span>
+                <span class="text-[10px] font-black text-blue-900 uppercase mb-2 block tracking-wider">Matchday Selector</span>
                 <div class="flex gap-2 overflow-x-auto scrollbar-hidden pb-1" id="matchday-selector-container"></div>
             </div>
 
-            <div class="flex justify-between items-center bg-[#003399] p-3 rounded-xl shadow-lg">
-                <h2 class="text-sm font-black text-white" id="fixture-round-title">ROUND 1</h2>
+            <div class="flex justify-between items-center bg-white border-l-4 border-blue-600 p-3 rounded-r-xl shadow-sm">
+                <h2 class="text-sm font-black text-blue-900" id="fixture-round-title">ROUND 1</h2>
                 <div class="flex gap-1">
-                    <button onclick="changeMatchday(-1)" class="w-8 h-8 bg-white/20 rounded-lg text-white"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button onclick="changeMatchday(1)" class="w-8 h-8 bg-white/20 rounded-lg text-white"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button onclick="changeMatchday(-1)" class="w-8 h-8 bg-slate-100 hover:bg-blue-50 rounded-lg text-blue-600 flex items-center justify-center transition"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button onclick="changeMatchday(1)" class="w-8 h-8 bg-slate-100 hover:bg-blue-50 rounded-lg text-blue-600 flex items-center justify-center transition"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-3" id="fixtures-grid"></div>
@@ -56,69 +74,168 @@
             <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto text-[10px] shadow-sm">
                 <table class="w-full text-center min-w-[500px]">
                     <thead class="bg-slate-50 border-b border-slate-200">
-                        <tr class="text-slate-600">
+                        <tr class="text-slate-500 font-bold">
                             <th class="py-3 px-2">#</th>
-                            <th class="py-3 text-left pl-2">TEAM</th>
+                            <th class="py-3 text-left pl-2">Club</th>
                             <th class="py-3">M</th>
                             <th class="py-3">W</th>
                             <th class="py-3">D</th>
                             <th class="py-3">L</th>
+                            <th class="py-3 hidden sm:table-cell">GF</th>
+                            <th class="py-3 hidden sm:table-cell">GA</th>
                             <th class="py-3">GD</th>
-                            <th class="py-3 text-[#003399]">pts</th>
+                            <th class="py-3 text-blue-600">Pts</th>
                         </tr>
                     </thead>
-                    <tbody id="standings-table-body" class="divide-y divide-slate-100 font-medium text-slate-800"></tbody>
+                    <tbody id="standings-table-body" class="divide-y divide-slate-100 font-semibold text-slate-700"></tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <script>
-        const TEAMS_LIST = [
-            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/250px-FC_Internazionale_Milano_2021.svg.png", tg: "https://t.me/Zayyarlin2" },
-            { id: "MIL", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg", tg: "https://t.me/Sanminoo" },
-            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg", tg: "https://t.me/ThuriMin2355" },
-            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/S.S._Lazio_badge.svg/1280px-S.S._Lazio_badge.svg.png", tg: "https://t.me/Bgo_thar_lay" },
-            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg", tg: "https://t.me/KyawGyi798260" },
-            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1280px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png", tg: "https://t.me/HeinHtet_Nai" },
-            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/commons/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg", tg: "https://t.me/Shhdfhjd" },
-            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg", tg: "https://t.me/MRTONE3" },
-            { id: "ATA", name: "Atalanta", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Atalanta_BC_new_logo.svg/1280px-Atalanta_BC_new_logo.svg.png", tg: "https://t.me/LuLu1662017" },
-            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/1280px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png", tg: "https://t.me/iz_szlai" },
-            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/9/92/Hellas_Verona_FC_logo_%282020%29.svg", tg: "https://t.me/Hemaljr10" },
-            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Torino_FC_Logo.svg/1280px-Torino_FC_Logo.svg.png", tg: "https://t.me/iluv_nadi" }
-        ].map(t => ({...t, mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pts:0}));
+    <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-lg p-5 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+                <h3 class="text-sm font-black text-blue-900 uppercase"><i class="fa-solid fa-shield-halved mr-1 text-blue-600"></i> Admin Score Manager</h3>
+                <button onclick="closeAdminModal()" class="w-7 h-7 bg-slate-100 rounded-lg text-slate-500 hover:text-slate-800 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="py-3 flex gap-2 items-center">
+                <label class="text-[10px] font-bold text-slate-500">Select Round:</label>
+                <select id="admin-round-select" onchange="renderAdminMatches()" class="bg-slate-50 text-xs font-bold text-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 focus:outline-none focus:border-blue-600">
+                </select>
+            </div>
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1 my-2" id="admin-matches-container"></div>
+            <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-200 text-xs font-bold rounded-lg text-slate-700">Cancel</button>
+                <button onclick="saveAllResults()" class="px-4 py-2 bg-blue-600 text-white text-xs font-black rounded-lg shadow hover:bg-blue-700">Save Changes</button>
+            </div>
+        </div>
+    </div>
 
-        const MATCH_RESULTS = {
-            0: [{ home: 'INT', away: 'TOR', hScore: 2, aScore: 2 }, { home: 'MIL', away: 'VER', hScore: 4, aScore: 1 }, { home: 'JUV', away: 'PAR', hScore: 1, aScore: 3 }, { home: 'LAZ', away: 'ATA', hScore: 6, aScore: 0 }, { home: 'ROM', away: 'NAP', hScore: 3, aScore: 0 }, { home: 'FIO', away: 'COM', hScore: 5, aScore: 3 }],
-            1: [{ home: 'MIL', away: 'TOR', hScore: 1, aScore: 1 }, { home: 'JUV', away: 'INT', hScore: 2, aScore: 8 }, { home: 'LAZ', away: 'VER', hScore: 2, aScore: 2 }, { home: 'ROM', away: 'PAR', hScore: 0, aScore: 5 }, { home: 'FIO', away: 'ATA', hScore: 13, aScore: 1 }, { home: 'COM', away: 'NAP', hScore: 1, aScore: 4 }],
-            2: [{ home: 'JUV', away: 'TOR', hScore: 2, aScore: 6 }, { home: 'LAZ', away: 'MIL', hScore: 1, aScore: 6 }, { home: 'ROM', away: 'INT', hScore: 7, aScore: 3 }, { home: 'FIO', away: 'VER', hScore: 5, aScore: 2 }, { home: 'COM', away: 'PAR', hScore: 0, aScore: 7 }, { home: 'NAP', away: 'ATA', hScore: 4, aScore: 3 }],
-            3: [{ home: 'LAZ', away: 'TOR', hScore: 3, aScore: 1 }, { home: 'ROM', away: 'JUV', hScore: 7, aScore: 3 }, { home: 'FIO', away: 'MIL', hScore: 5, aScore: 5 }, { home: 'COM', away: 'INT', hScore: 2, aScore: 5 }, { home: 'NAP', away: 'VER', hScore: 10, aScore: 1 }, { home: 'ATA', away: 'PAR', hScore: 1, aScore: 14 }],
-            4: [{ home: 'ROM', away: 'TOR', hScore: 4, aScore: 2 }, { home: 'FIO', away: 'LAZ', hScore: 3, aScore: 5 }, { home: 'COM', away: 'JUV', hScore: 2, aScore: 3 }, { home: 'NAP', away: 'MIL', hScore: 3, aScore: 3 }, { home: 'ATA', away: 'INT', hScore: 0, aScore: 3 }, { home: 'PAR', away: 'VER', hScore: 7, aScore: 0 }],
-            5: [{ home: 'FIO', away: 'TOR', hScore: 4, aScore: 0 }, { home: 'COM', away: 'ROM', hScore: 6, aScore: 3 }, { home: 'NAP', away: 'LAZ', hScore: 3, aScore: 0 }, { home: 'ATA', away: 'JUV', hScore: 1, aScore: 2 }, { home: 'PAR', away: 'MIL', hScore: 1, aScore: 2 }, { home: 'VER', away: 'INT', hScore: 3, aScore: 1 }],
-            6: [{ home: 'COM', away: 'TOR', hScore: 6, aScore: 2 }, { home: 'NAP', away: 'FIO', hScore: 1, aScore: 2 }, { home: 'ATA', away: 'ROM', hScore: 1, aScore: 5 }, { home: 'PAR', away: 'LAZ', hScore: 4, aScore: 2 }, { home: 'VER', away: 'JUV', hScore: 5, aScore: 2 }, { home: 'INT', away: 'MIL', hScore: 4, aScore: 2 }],
-            7: [{ home: 'NAP', away: 'TOR', hScore: 4, aScore: 4 }, { home: 'ATA', away: 'COM', hScore: 0, aScore: 3 }, { home: 'PAR', away: 'FIO', hScore: 1, aScore: 1 }, { home: 'VER', away: 'ROM', hScore: 0, aScore: 4 }, { home: 'INT', away: 'LAZ', hScore: 1, aScore: 3 }, { home: 'MIL', away: 'JUV', hScore: 1, aScore: 1 }],
-            8: [{ home: 'ATA', away: 'TOR', hScore: 0, aScore: 7 }, { home: 'PAR', away: 'NAP', hScore: 7, aScore: 3 }, { home: 'VER', away: 'COM', hScore: 0, aScore: 3 }, { home: 'INT', away: 'FIO', hScore: 2, aScore: 1 }, { home: 'MIL', away: 'ROM', hScore: 3, aScore: 4 }, { home: 'JUV', away: 'LAZ', hScore: 0, aScore: 1 }],
-            9: [{ home: 'PAR', away: 'TOR', hScore: 3, aScore: 1 }, { home: 'VER', away: 'ATA', hScore: 0, aScore: 3 }, { home: 'INT', away: 'NAP', hScore: 0, aScore: 4 }, { home: 'MIL', away: 'COM', hScore: 10, aScore: 0 }, { home: 'JUV', away: 'FIO', hScore: 1, aScore: 2 }, { home: 'LAZ', away: 'ROM', hScore: 0, aScore: 4 }],
-            10: [{ home: 'VER', away: 'TOR', hScore: 0, aScore: 3 }, { home: 'INT', away: 'PAR', hScore: 0, aScore: 3 }, { home: 'MIL', away: 'ATA', hScore: 6, aScore: 1 }, { home: 'JUV', away: 'NAP', hScore: 0, aScore: 2 }, { home: 'LAZ', away: 'COM', hScore: 1, aScore: 7 }, { home: 'ROM', away: 'FIO', hScore: 2, aScore: 3 }]
+    <div id="password-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xs p-5 shadow-2xl flex flex-col">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+                <h3 class="text-xs font-black text-blue-900 uppercase"><i class="fa-solid fa-lock mr-1 text-blue-600"></i> Admin Password</h3>
+                <button onclick="closePasswordModal()" class="w-6 h-6 bg-slate-100 rounded-lg text-slate-500 hover:text-slate-800 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="py-4">
+                <label class="text-[10px] font-bold text-slate-500 mb-1 block">Enter Admin Password:</label>
+                <input type="password" id="admin-password-input" placeholder="Password" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                <p id="password-error" class="text-[9px] text-red-500 mt-1 hidden">Incorrect password. Please try again.</p>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closePasswordModal()" class="px-3 py-1.5 bg-slate-200 text-[10px] font-bold rounded-lg text-slate-700">Cancel</button>
+                <button onclick="verifyPassword()" class="px-3 py-1.5 bg-blue-600 text-white text-[10px] font-black rounded-lg shadow hover:bg-blue-700">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCG8xdfNHBFKo1VlfBYCYZTP-8vid3R97I",
+            authDomain: "superepl.firebaseapp.com",
+            projectId: "superepl",
+            storageBucket: "superepl.firebasestorage.app",
+            messagingSenderId: "885676848744",
+            appId: "1:885676848744:web:593919aefec9df5bc2eddd",
+            measurementId: "G-PSXXFCTPPY"
         };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const TEAMS_LIST = [
+            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", telegram: "https://t.me/Wolfy21002" },
+            { id: "ACM", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", telegram: "https://t.me/Sammykaung" },
+            { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_Logo_2017.svg", telegram: "https://t.me/bobominhein" },
+            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/MGYeye1473" },
+            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/Sanminoo" },
+            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/iz_szlai" },
+            { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/Aung19959" },
+            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/zeusace0" },
+            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/aamk79" },
+            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/" },
+            { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/en/6/6f/Parma_Calcio_1913_logo.svg", telegram: "https://t.me/MoungNaing" },
+            { id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/Naindjjd" }
+        ];
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
+        let standingsData = [];
+        let RESULTS = {};
 
-        window.onload = function() { 
-            generateFixedRoundRobinFixtures(); 
-            calculateStandings();
-            renderMatchdaySelector(); 
-            renderFixtures(); 
+        window.onload = async function() {
+            generateFixedRoundRobinFixtures();
+            renderMatchdaySelector();
+
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    try {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } catch (customErr) {
+                        console.warn("Custom token sign-in failed, falling back to anonymous auth:", customErr);
+                        await signInAnonymously(auth);
+                    }
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                const docRef = doc(db, 'tournament_results', 'premier_league_12_team');
+
+                onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists() && docSnap.data().results) {
+                        RESULTS = docSnap.data().results;
+                    } else {
+                        RESULTS = {};
+                        setDoc(docRef, { results: RESULTS }).catch(console.error);
+                    }
+                    processAllResults();
+                    renderFixtures();
+                    updateStandingsTable();
+                }, (error) => {
+                    console.error("Firestore listener error:", error);
+                    RESULTS = {};
+                    processAllResults();
+                    renderFixtures();
+                    updateStandingsTable();
+                });
+
+            } catch (e) {
+                console.error("Auth/Init error:", e);
+                RESULTS = {};
+                processAllResults();
+                renderFixtures();
+                updateStandingsTable();
+            }
         };
 
-        function switchTab(tab) {
+        function processAllResults() {
+            standingsData = TEAMS_LIST.map(t => ({ ...t, mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 }));
+            Object.values(RESULTS).forEach(round => {
+                if (!round) return;
+                round.forEach(res => {
+                    if (res.hs === undefined || res.hs === null || res.hs === "" || res.as === undefined || res.as === null || res.as === "") return;
+                    const h = standingsData.find(t => t.id === res.home), a = standingsData.find(t => t.id === res.away);
+                    if(!h || !a) return;
+                    const hs = parseInt(res.hs), as = parseInt(res.as);
+                    h.mp++; a.mp++; h.gf += hs; h.ga += as; a.gf += as; a.ga += hs;
+                    h.gd = h.gf - h.ga; a.gd = a.gf - a.ga;
+                    if (hs > as) { h.w++; h.pts += 3; a.l++; } else if (hs < as) { a.w++; a.pts += 3; h.l++; } else { h.d++; a.d++; h.pts += 1; a.pts += 1; }
+                });
+            });
+        }
+
+        window.switchTab = function(tab) {
             document.getElementById('tab-fixtures-content').classList.toggle('hidden', tab !== 'fixtures');
             document.getElementById('tab-standings-content').classList.toggle('hidden', tab !== 'standings');
-            document.getElementById('tab-fixtures-btn').className = tab === 'fixtures' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
-            document.getElementById('tab-standings-btn').className = tab === 'standings' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-[#003399] bg-white shadow-lg" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-white";
+            document.getElementById('tab-fixtures-btn').className = tab === 'fixtures' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-white bg-blue-600 shadow" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-slate-600";
+            document.getElementById('tab-standings-btn').className = tab === 'standings' ? "px-3 py-1.5 rounded-md text-[10px] font-bold text-white bg-blue-600 shadow" : "px-3 py-1.5 rounded-md text-[10px] font-bold text-slate-600";
             if(tab === 'standings') updateStandingsTable();
-        }
+        };
 
         function generateFixedRoundRobinFixtures() {
             const numTeams = TEAMS_LIST.length;
@@ -132,37 +249,17 @@
             }
         }
 
-        function calculateStandings() {
-            TEAMS_LIST.forEach(t => { t.mp=0; t.w=0; t.d=0; t.l=0; t.gf=0; t.ga=0; t.gd=0; t.pts=0; });
-            Object.values(MATCH_RESULTS).forEach(round => {
-                round.forEach(match => {
-                    if (match.hScore !== null && match.aScore !== null) {
-                        const h = TEAMS_LIST.find(t => t.id === match.home);
-                        const a = TEAMS_LIST.find(t => t.id === match.away);
-                        if(!h || !a) return;
-                        h.mp++; a.mp++;
-                        h.gf += match.hScore; h.ga += match.aScore;
-                        a.gf += match.aScore; a.ga += match.hScore;
-                        h.gd = h.gf - h.ga; a.gd = a.gf - a.ga;
-                        if (match.hScore > match.aScore) { h.pts += 3; h.w++; a.l++; }
-                        else if (match.hScore < match.aScore) { a.pts += 3; a.w++; h.l++; }
-                        else { h.pts += 1; a.pts += 1; h.d++; a.d++; }
-                    }
-                });
-            });
-        }
-
         function renderMatchdaySelector() {
             const container = document.getElementById('matchday-selector-container');
             container.innerHTML = '';
             for (let r = 0; r < TOTAL_ROUNDS; r++) {
                 const btn = document.createElement('button');
-                btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === 0 ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === 0 ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'}`;
                 btn.innerText = `R${r + 1}`;
                 btn.onclick = () => { 
                     currentViewingMatchday = r; 
                     document.querySelectorAll('#matchday-selector-container button').forEach((b, idx) => {
-                        b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === r ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                        b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === r ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'}`;
                     });
                     renderFixtures(); 
                 };
@@ -172,59 +269,153 @@
 
         function renderFixtures() {
             const container = document.getElementById('fixtures-grid');
+            if(!container) return;
             container.innerHTML = '';
             document.getElementById('fixture-round-title').innerText = `ROUND ${currentViewingMatchday + 1}`;
-            if(!fixtures[currentViewingMatchday]) return;
-            fixtures[currentViewingMatchday].forEach(match => {
-                const h = TEAMS_LIST.find(t => t.id === match.home);
-                const a = TEAMS_LIST.find(t => t.id === match.away);
-                const result = MATCH_RESULTS[currentViewingMatchday]?.find(r => r.home === h.id && r.away === a.id);
-                const hasScore = result && result.hScore !== null && result.aScore !== null;
-                
+            const roundData = fixtures[currentViewingMatchday];
+            const roundResults = RESULTS[currentViewingMatchday] || [];
+
+            roundData.forEach(match => {
+                const h = TEAMS_LIST.find(t => t.id === match.home), a = TEAMS_LIST.find(t => t.id === match.away);
+                const res = roundResults.find(r => r.home === h.id && r.away === a.id);
+
+                let scoreDisplay = '<span class="text-blue-600 font-black text-[10px] w-[20%] text-center">VS</span>';
+                if (res && res.hs !== undefined && res.hs !== null && res.hs !== "") {
+                    scoreDisplay = `<span class="text-blue-900 font-bold text-xs w-[20%] text-center bg-blue-50 py-1 rounded border border-blue-100">${res.hs} - ${res.as}</span>`;
+                }
+
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm";
+                card.className = "bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between shadow-sm";
                 card.innerHTML = `
-                    <a href="${h.tg}" target="_blank" class="flex items-center gap-2 w-[40%] hover:opacity-70">
-                        <img src="${h.logo}" class="w-8 h-8 object-contain"><span class="text-xs font-bold truncate text-slate-700">${h.name}</span>
-                    </a>
-                    <div class="flex flex-col items-center w-[20%]">
-                        ${hasScore ? `<span class="text-[#003399] font-black text-sm">${result.hScore} - ${result.aScore}</span>` : '<span class="text-[#003399] font-black text-[10px]">VS</span>'}
-                    </div>
-                    <a href="${a.tg}" target="_blank" class="flex items-center gap-2 w-[40%] justify-end hover:opacity-70">
-                        <span class="text-xs font-bold truncate text-slate-700">${a.name}</span><img src="${a.logo}" class="w-8 h-8 object-contain">
-                    </a>`;
+                    <div class="flex items-center gap-2 w-[40%]" style="min-width: 0;"><img src="${h.logo}" class="w-8 h-8 object-contain flex-shrink-0" crossorigin="anonymous"><a href="${h.telegram}" target="_blank" class="text-xs font-bold text-slate-800 truncate hover:text-blue-600">${h.name}</a></div>
+                    ${scoreDisplay}
+                    <div class="flex items-center gap-2 w-[40%] justify-end" style="min-width: 0;"><a href="${a.telegram}" target="_blank" class="text-xs font-bold text-slate-800 truncate hover:text-blue-600 text-right">${a.name}</a><img src="${a.logo}" class="w-8 h-8 object-contain flex-shrink-0" crossorigin="anonymous"></div>`;
                 container.appendChild(card);
             });
         }
 
         function updateStandingsTable() {
-            calculateStandings();
             const tbody = document.getElementById('standings-table-body');
-            const sortedTeams = [...TEAMS_LIST].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-            tbody.innerHTML = sortedTeams.map((team, idx) => `
-                <tr class="hover:bg-blue-50 transition-colors">
-                    <td class="py-3 px-2 text-slate-500">${idx+1}</td>
-                    <td class="text-left py-3 pl-2">
-                        <a href="${team.tg}" target="_blank" class="flex items-center gap-2 hover:underline">
-                            <img src="${team.logo}" class="w-5 h-5 object-contain"><span class="font-bold text-slate-800">${team.name}</span>
-                        </a>
-                    </td>
-                    <td class="py-3">${team.mp}</td><td class="py-3">${team.w}</td><td class="py-3">${team.d}</td><td class="py-3">${team.l}</td>
-                    <td class="py-3">${team.gd}</td><td class="py-3 font-black text-[#003399]">${team.pts}</td>
-                </tr>
-            `).join('');
+            if(!tbody) return;
+            const sorted = [...standingsData].sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+            tbody.innerHTML = sorted.map((t, i) => `
+                <tr class="hover:bg-blue-50/50">
+                    <td class="py-3 px-2 font-bold text-slate-500">${i+1}</td>
+                    <td class="text-left py-3 pl-2"><a href="${t.telegram}" target="_blank" class="flex items-center gap-2"><img src="${t.logo}" class="w-5 h-5 object-contain flex-shrink-0" crossorigin="anonymous"><span class="font-bold text-slate-900 truncate">${t.name}</span></a></td>
+                    <td class="py-3">${t.mp}</td><td class="py-3">${t.w}</td><td class="py-3">${t.d}</td><td class="py-3">${t.l}</td>
+                    <td class="py-3 hidden sm:table-cell">${t.gf}</td><td class="py-3 hidden sm:table-cell">${t.ga}</td>
+                    <td class="py-3">${t.gd}</td><td class="py-3 font-black text-blue-600 text-xs">${t.pts}</td>
+                </tr>`).join('');
         }
-        
-        function changeMatchday(d) {
+
+        window.changeMatchday = function(d) {
             let n = currentViewingMatchday + d;
             if (n >= 0 && n < TOTAL_ROUNDS) { 
                 currentViewingMatchday = n; 
                 document.querySelectorAll('#matchday-selector-container button').forEach((b, idx) => {
-                    b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === n ? 'bg-[#003399] text-white' : 'bg-white text-slate-500 border-slate-200'}`;
+                    b.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${idx === n ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'}`;
                 });
                 renderFixtures(); 
             }
-        }
+        };
+
+        window.promptAdminPassword = function() {
+            document.getElementById('admin-password-input').value = '';
+            document.getElementById('password-error').classList.add('hidden');
+            document.getElementById('password-modal').classList.remove('hidden');
+        };
+
+        window.closePasswordModal = function() {
+            document.getElementById('password-modal').classList.add('hidden');
+        };
+
+        window.verifyPassword = function() {
+            const pass = document.getElementById('admin-password-input').value;
+            if (pass === "2024") {
+                closePasswordModal();
+                openAdminModal();
+            } else {
+                document.getElementById('password-error').classList.remove('hidden');
+            }
+        };
+
+        window.openAdminModal = function() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            const select = document.getElementById('admin-round-select');
+            select.innerHTML = '';
+            for(let i=0; i<TOTAL_ROUNDS; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `Round ${i+1}`;
+                if(i === currentViewingMatchday) opt.selected = true;
+                select.appendChild(opt);
+            }
+            renderAdminMatches();
+        };
+
+        window.closeAdminModal = function() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        };
+
+        window.renderAdminMatches = function() {
+            const roundIdx = parseInt(document.getElementById('admin-round-select').value);
+            const container = document.getElementById('admin-matches-container');
+            container.innerHTML = '';
+            const roundData = fixtures[roundIdx];
+            const roundResults = RESULTS[roundIdx] || [];
+
+            roundData.forEach((match) => {
+                const h = TEAMS_LIST.find(t => t.id === match.home), a = TEAMS_LIST.find(t => t.id === match.away);
+                const res = roundResults.find(r => r.home === h.id && r.away === a.id) || { home: h.id, away: a.id, hs: '', as: '' };
+
+                const row = document.createElement('div');
+                row.className = "bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-2";
+                row.innerHTML = `
+                    <div class="text-xs font-bold text-slate-800 w-[38%] truncate text-right">${h.name}</div>
+                    <div class="flex items-center gap-1 w-[24%] justify-center">
+                        <input type="number" min="0" data-home="${h.id}" data-away="${a.id}" class="hs-input w-10 bg-white border border-slate-300 rounded text-center text-xs font-bold py-1 text-slate-800 focus:outline-none focus:border-blue-600" value="${res.hs !== undefined ? res.hs : ''}">
+                        <span class="text-slate-400">-</span>
+                        <input type="number" min="0" data-home="${h.id}" data-away="${a.id}" class="as-input w-10 bg-white border border-slate-300 rounded text-center text-xs font-bold py-1 text-slate-800 focus:outline-none focus:border-blue-600" value="${res.as !== undefined ? res.as : ''}">
+                    </div>
+                    <div class="text-xs font-bold text-slate-800 w-[38%] truncate">${a.name}</div>
+                `;
+                container.appendChild(row);
+            });
+        };
+
+        window.saveAllResults = async function() {
+            const roundIdx = parseInt(document.getElementById('admin-round-select').value);
+            const container = document.getElementById('admin-matches-container');
+            const hInputs = container.querySelectorAll('.hs-input');
+            const aInputs = container.querySelectorAll('.as-input');
+
+            const newRoundResults = [];
+            for(let i=0; i<hInputs.length; i++) {
+                const home = hInputs[i].getAttribute('data-home');
+                const away = hInputs[i].getAttribute('data-away');
+                const hsVal = hInputs[i].value;
+                const asVal = aInputs[i].value;
+                newRoundResults.push({
+                    home: home,
+                    away: away,
+                    hs: hsVal !== "" ? parseInt(hsVal) : "",
+                    as: asVal !== "" ? parseInt(asVal) : ""
+                });
+            }
+
+            RESULTS[roundIdx] = newRoundResults;
+            processAllResults();
+            renderFixtures();
+            updateStandingsTable();
+
+            try {
+                const docRef = doc(db, 'tournament_results', 'premier_league_12_team');
+                await setDoc(docRef, { results: RESULTS });
+                closeAdminModal();
+            } catch(err) {
+                console.error("Error saving to Firebase:", err);
+            }
+        };
     </script>
 </body>
 </html>
