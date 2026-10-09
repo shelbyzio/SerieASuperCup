@@ -50,7 +50,7 @@
                 <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
                     <i class="fa-solid fa-cloud text-sm"></i>
                 </div>
-                <div><span class="text-[8px] text-slate-400 block uppercase font-bold">Database</span><span class="text-xs font-bold text-emerald-600" id="sync-status">Connected</span></div>
+                <div><span class="text-[8px] text-slate-400 block uppercase font-bold">Database</span><span class="text-xs font-bold text-emerald-600" id="sync-status">Local / Offline Mode</span></div>
             </div>
         </div>
 
@@ -130,87 +130,54 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCG8xdfNHBFKo1VlfBYCYZTP-8vid3R97I",
-            authDomain: "superepl.firebaseapp.com",
-            projectId: "superepl",
-            storageBucket: "superepl.firebasestorage.app",
-            messagingSenderId: "885676848744",
-            appId: "1:885676848744:web:ac9f912c3f06ecd3c2eddd",
-            measurementId: "G-FNDM2JKVH9"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
+    <script>
         const TEAMS_LIST = [
            { id: "INT", name: "Inter Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg", telegram: "https://t.me/zayd0408" },
-{ id: "ACM", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", telegram: "https://t.me/channyein199" },
-{ id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_Logo_2017.svg", telegram: "https://t.me/Garniya" },
-{ id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/minkhant090" },
-{ id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/TheinWinn2000" },
-{ id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/Sakmkl" },
-{ id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/zinlin18" },
-{ id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/khant200455" },
-{ id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/htetwaiaung21112002" },
-{ id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/aungnayzan" },
-{ id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/en/6/6f/Parma_Calcio_1913_logo.svg", telegram: "https://t.me/Aungpyinnyar" },
-{ id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/AungZinPhyo1992" }
+           { id: "ACM", name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_AC_Milan.svg", telegram: "https://t.me/channyein199" },
+           { id: "ROM", name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_Logo_2017.svg", telegram: "https://t.me/Garniya" },
+           { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/minkhant090" },
+           { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/TheinWinn2000" },
+           { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/Sakmkl" },
+           { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/zinlin18" },
+           { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/khant200455" },
+           { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/htetwaiaung21112002" },
+           { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/aungnayzan" },
+           { id: "PAR", name: "Parma", logo: "https://upload.wikimedia.org/wikipedia/en/6/6f/Parma_Calcio_1913_logo.svg", telegram: "https://t.me/Aungpyinnyar" },
+           { id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/AungZinPhyo1992" }
         ];
 
         let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
         let standingsData = [];
-        let RESULTS = {};
+        let RESULTS = {
+            0: [
+                { home: "INT", away: "MON", hs: 5, as: 0 },
+                { home: "ACM", away: "PAR", hs: 0, as: 3 },
+                { home: "ROM", away: "LAZ", hs: "", as: "" },
+                { home: "JUV", away: "TOR", hs: 6, as: 5 },
+                { home: "FIO", away: "NAP", hs: 1, as: 5 },
+                { home: "COM", away: "VER", hs: 8, as: 1 }
+            ]
+        };
 
-        window.onload = async function() {
+        window.onload = function() {
             generateFixedRoundRobinFixtures();
             renderMatchdaySelector();
 
+            // Load saved results from local storage if available, otherwise merge with defaults
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    try {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } catch (customErr) {
-                        console.warn("Custom token sign-in failed, falling back to anonymous auth:", customErr);
-                        await signInAnonymously(auth);
-                    }
-                } else {
-                    await signInAnonymously(auth);
+                const saved = localStorage.getItem('serie_a_tournament_results');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    // Merge saved results over defaults
+                    RESULTS = { ...RESULTS, ...parsed };
                 }
-
-                const docRef = doc(db, 'tournament_results', 'premier_league_12_team');
-
-                onSnapshot(docRef, (docSnap) => {
-                    if (docSnap.exists() && docSnap.data().results) {
-                        RESULTS = docSnap.data().results;
-                    } else {
-                        RESULTS = {};
-                        setDoc(docRef, { results: RESULTS }).catch(console.error);
-                    }
-                    processAllResults();
-                    renderFixtures();
-                    updateStandingsTable();
-                }, (error) => {
-                    console.error("Firestore listener error:", error);
-                    RESULTS = {};
-                    processAllResults();
-                    renderFixtures();
-                    updateStandingsTable();
-                });
-
             } catch (e) {
-                console.error("Auth/Init error:", e);
-                RESULTS = {};
-                processAllResults();
-                renderFixtures();
-                updateStandingsTable();
+                console.error("Local storage error:", e);
             }
+
+            processAllResults();
+            renderFixtures();
+            updateStandingsTable();
         };
 
         function processAllResults() {
@@ -223,7 +190,8 @@
                     if(!h || !a) return;
                     const hs = parseInt(res.hs), as = parseInt(res.as);
                     h.mp++; a.mp++; h.gf += hs; h.ga += as; a.gf += as; a.ga += hs;
-                    h.gd = h.gf - h.ga; a.gd = a.gf - a.ga;
+                    h.gd = h.gf - h.ga; 
+                    a.gd = a.gf - a.ga;
                     if (hs > as) { h.w++; h.pts += 3; a.l++; } else if (hs < as) { a.w++; a.pts += 3; h.l++; } else { h.d++; a.d++; h.pts += 1; a.pts += 1; }
                 });
             });
@@ -383,7 +351,7 @@
             });
         };
 
-        window.saveAllResults = async function() {
+        window.saveAllResults = function() {
             const roundIdx = parseInt(document.getElementById('admin-round-select').value);
             const container = document.getElementById('admin-matches-container');
             const hInputs = container.querySelectorAll('.hs-input');
@@ -409,11 +377,10 @@
             updateStandingsTable();
 
             try {
-                const docRef = doc(db, 'tournament_results', 'premier_league_12_team');
-                await setDoc(docRef, { results: RESULTS });
+                localStorage.setItem('serie_a_tournament_results', JSON.stringify(RESULTS));
                 closeAdminModal();
             } catch(err) {
-                console.error("Error saving to Firebase:", err);
+                console.error("Error saving to LocalStorage:", err);
             }
         };
     </script>
