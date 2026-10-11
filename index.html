@@ -164,6 +164,14 @@
                 { home: "FIO", away: "LAZ", hs: "", as: "" },
                 { home: "COM", away: "TOR", hs: 3, as: 1 },
                 { home: "VER", away: "NAP", hs: 0, as: 6 }
+            ],
+            2: [
+                { home: "ROM", away: "MON", hs: 2, as: 1 },
+                { home: "JUV", away: "ACM", hs: 8, as: 1 },
+                { home: "FIO", away: "INT", hs: 2, as: 2 },
+                { home: "COM", away: "PAR", hs: "", as: "" },
+                { home: "VER", away: "LAZ", hs: 1, as: 6 },
+                { home: "NAP", away: "TOR", hs: "", as: "" }
             ]
         };
 
@@ -171,7 +179,6 @@
             generateFixedRoundRobinFixtures();
             renderMatchdaySelector();
 
-            // Load saved results from local storage if available, otherwise merge with defaults
             try {
                 const saved = localStorage.getItem('serie_a_tournament_results');
                 if (saved) {
