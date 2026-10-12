@@ -152,7 +152,7 @@
             0: [
                 { home: "INT", away: "MON", hs: 5, as: 0 },
                 { home: "ACM", away: "PAR", hs: 0, as: 3 },
-                { home: "ROM", away: "LAZ", hs: "", as: "" },
+                { home: "ROM", away: "LAZ", hs: 3, as: 3 },
                 { home: "JUV", away: "TOR", hs: 6, as: 5 },
                 { home: "FIO", away: "NAP", hs: 1, as: 5 },
                 { home: "COM", away: "VER", hs: 8, as: 1 }
@@ -161,7 +161,7 @@
                 { home: "ACM", away: "MON", hs: 3, as: 0 },
                 { home: "ROM", away: "INT", hs: 0, as: 3 },
                 { home: "JUV", away: "PAR", hs: 8, as: 0 },
-                { home: "FIO", away: "LAZ", hs: "", as: "" },
+                { home: "FIO", away: "LAZ", hs: 1, as: 3 },
                 { home: "COM", away: "TOR", hs: 3, as: 1 },
                 { home: "VER", away: "NAP", hs: 0, as: 6 }
             ],
@@ -171,7 +171,15 @@
                 { home: "FIO", away: "INT", hs: 2, as: 2 },
                 { home: "COM", away: "PAR", hs: "", as: "" },
                 { home: "VER", away: "LAZ", hs: 1, as: 6 },
-                { home: "NAP", away: "TOR", hs: 6 , as: 0 }
+                { home: "NAP", away: "TOR", hs: 1, as: 3 }
+            ],
+            3: [
+                { home: "JUV", away: "MON", hs: 3, as: 0 },
+                { home: "VER", away: "INT", hs: 0, as: 9 },
+                { home: "TOR", away: "LAZ", hs: 0, as: 3 },
+                { home: "FIO", away: "PAR", hs: "", as: "" },
+                { home: "COM", away: "ACM", hs: "", as: "" },
+                { home: "NAP", away: "ROM", hs: "", as: "" }
             ]
         };
 
@@ -374,7 +382,7 @@
             const newRoundResults = [];
             for(let i=0; i<hInputs.length; i++) {
                 const home = hInputs[i].getAttribute('data-home');
-                const away = hInputs[i].getAttribute('data-email') || hInputs[i].getAttribute('data-away');
+                const away = hInputs[i].getAttribute('data-away');
                 const hsVal = hInputs[i].value;
                 const asVal = aInputs[i].value;
                 newRoundResults.push({
