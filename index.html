@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premier League Style 12-Team Tournament Hub</title>
+    <title>Serie A Community Tournament Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -146,7 +146,7 @@
            { id: "MON", name: "Monza", logo: "https://upload.wikimedia.org/wikipedia/en/9/91/AC_Monza_crest.svg", telegram: "https://t.me/AungZinPhyo1992" }
         ];
 
-        let fixtures = [], currentViewingMatchday = 0, TOTAL_ROUNDS = 11;
+        let fixtures = [], currentViewingMatchday = 9, TOTAL_ROUNDS = 11;
         let standingsData = [];
         let RESULTS = {
             0: [
@@ -220,6 +220,15 @@
                 { home: "INT", away: "COM", hs: "", as: "" },
                 { home: "ACM", away: "FIO", hs: 0, as: 4 },
                 { home: "ROM", away: "JUV", hs: 4, as: 3 }
+            ],
+            // Round 10 results (Index 9)
+            9: [
+                { home: "LAZ", away: "MON", hs: 3, as: 0 },
+                { home: "PAR", away: "TOR", hs: 3, as: 13 },
+                { home: "INT", away: "NAP", hs: 1, as: 5 },
+                { home: "ACM", away: "VER", hs: 4, as: 4 },
+                { home: "ROM", away: "COM", hs: 3, as: 0 },
+                { home: "JUV", away: "FIO", hs: 0, as: 6 }
             ]
         };
 
@@ -269,6 +278,7 @@
 
         function generateFixedRoundRobinFixtures() {
             const numTeams = TEAMS_LIST.length;
+            fixtures = [];
             for (let round = 0; round < numTeams - 1; round++) {
                 const roundMatches = [];
                 for (let i = 0; i < numTeams / 2; i++) {
@@ -303,12 +313,13 @@
             if(!container) return;
             container.innerHTML = '';
             document.getElementById('fixture-round-title').innerText = `ROUND ${currentViewingMatchday + 1}`;
-            const roundData = fixtures[currentViewingMatchday];
             const roundResults = RESULTS[currentViewingMatchday] || [];
+            const roundData = roundResults.length > 0 ? roundResults : (fixtures[currentViewingMatchday] || []);
 
             roundData.forEach(match => {
                 const h = TEAMS_LIST.find(t => t.id === match.home), a = TEAMS_LIST.find(t => t.id === match.away);
-                const res = roundResults.find(r => r.home === h.id && r.away === a.id);
+                if(!h || !a) return;
+                const res = roundResults.find(r => r.home === h.id && r.away === a.id) || match;
 
                 let scoreDisplay = '<span class="text-blue-600 font-black text-[10px] w-[20%] text-center">VS</span>';
                 if (res && res.hs !== undefined && res.hs !== null && res.hs !== "") {
@@ -392,11 +403,12 @@
             const roundIdx = parseInt(document.getElementById('admin-round-select').value);
             const container = document.getElementById('admin-matches-container');
             container.innerHTML = '';
-            const roundData = fixtures[roundIdx];
             const roundResults = RESULTS[roundIdx] || [];
+            const roundData = roundResults.length > 0 ? roundResults : (fixtures[roundIdx] || []);
 
             roundData.forEach((match) => {
                 const h = TEAMS_LIST.find(t => t.id === match.home), a = TEAMS_LIST.find(t => t.id === match.away);
+                if (!h || !a) return;
                 const res = roundResults.find(r => r.home === h.id && r.away === a.id) || { home: h.id, away: a.id, hs: '', as: '' };
 
                 const row = document.createElement('div');
