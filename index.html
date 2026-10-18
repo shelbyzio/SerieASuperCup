@@ -138,7 +138,7 @@
            { id: "JUV", name: "Juventus", logo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg", telegram: "https://t.me/minkhant090" },
            { id: "FIO", name: "Fiorentina", logo: "https://upload.wikimedia.org/wikipedia/en/b/ba/ACF_Fiorentina_logo.svg", telegram: "https://t.me/TheinWinn2000" },
            { id: "COM", name: "Como", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/Como_1907_logo.svg", telegram: "https://t.me/Sakmkl" },
-           { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hellás_Verona_FC_logo_2020.svg", telegram: "https://t.me/zinlin18" },
+           { id: "VER", name: "Verona", logo: "https://upload.wikimedia.org/wikipedia/en/3/3d/Hell%C3%A1s_Verona_FC_logo_2020.svg", telegram: "https://t.me/zinlin18" },
            { id: "NAP", name: "Napoli", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/SSC_Napoli_Logo_2024.svg", telegram: "https://t.me/khant200455" },
            { id: "TOR", name: "Torino", logo: "https://upload.wikimedia.org/wikipedia/en/2/2a/Torino_FC_Logo.svg", telegram: "https://t.me/htetwaiaung21112002" },
            { id: "LAZ", name: "Lazio", logo: "https://upload.wikimedia.org/wikipedia/en/e/e0/S.S._Lazio_badge.svg", telegram: "https://t.me/aungnayzan" },
@@ -212,6 +212,14 @@
                 { home: "PAR", away: "FIO", hs: 1, as: 1 },
                 { home: "INT", away: "JUV", hs: 5, as: 2 },
                 { home: "ACM", away: "ROM", hs: 0, as: 7 }
+            ],
+            8: [
+                { home: "TOR", away: "MON", hs: 3, as: 0 },
+                { home: "LAZ", away: "NAP", hs: 0, as: 3 },
+                { home: "PAR", away: "VER", hs: "", as: "" },
+                { home: "INT", away: "COM", hs: "", as: "" },
+                { home: "ACM", away: "FIO", hs: 0, as: 4 },
+                { home: "ROM", away: "JUV", hs: 4, as: 3 }
             ]
         };
 
@@ -277,7 +285,7 @@
             container.innerHTML = '';
             for (let r = 0; r < TOTAL_ROUNDS; r++) {
                 const btn = document.createElement('button');
-                btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === 0 ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'}`;
+                btn.className = `flex-shrink-0 px-3 py-1 rounded-lg font-bold text-[10px] border ${r === currentViewingMatchday ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'}`;
                 btn.innerText = `R${r + 1}`;
                 btn.onclick = () => { 
                     currentViewingMatchday = r; 
